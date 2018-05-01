@@ -1,0 +1,4 @@
+For the project I decided to try a number of different methods for regression and classification.
+For classification I tried a Gaussian Naive Bayes Classifier, MLP Classifier, Random Forest Classifier, Support Vector Machine Classifier, and K-Nearest-Neighbors Classifier.
+I decided to investigate the categorical and continuos features seperately and tried to find the most successful classification algorithm based on those 
+seperate features.
