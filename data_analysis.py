@@ -8,14 +8,14 @@ print("collecting data for classification...")
 
 class_labels = 48
 
-classes = pd.read_csv(file_name, usecols=[class_labels])
+classes = pd.read_csv(file_name, usecols=[class_labels], header=None)
 
-sum_pos = classes[classes == 1].count()
-sum_neg = classes[classes == -1].count()
+sum_pos = classes[classes[class_labels] == 1].count()
+sum_neg = classes[classes[class_labels] == -1].count()
 
-total = sum_pos[0]+sum_neg[0]
-print("pos fraction:", sum_pos[0]/total)
-print("neg fraction:", sum_neg[0]/total)
+total = sum_pos[class_labels]+sum_neg[class_labels]
+print("pos fraction:", sum_pos[class_labels]/total, sum_pos[class_labels])
+print("neg fraction:", sum_neg[class_labels]/total, sum_neg[class_labels])
 
 file_name = "regression_train.data"
 

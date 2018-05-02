@@ -84,7 +84,7 @@ for train_index, test_index in skf.split(features_data, class_data):
 	feat_train, feat_test = features_data[train_index], features_data[test_index]
 	class_train, class_test = class_data[train_index], class_data[test_index]
 	
-	clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(10, 5), random_state=1)
+	clf = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(5, 3), random_state=1)
 	clf.fit(feat_train, class_train)
 	predicted = clf.predict(feat_test)
 	

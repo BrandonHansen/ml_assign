@@ -1,4 +1,15 @@
-For the project I decided to try a number of different methods for regression and classification.
-For classification I tried a Gaussian Naive Bayes Classifier, MLP Classifier, Random Forest Classifier, Support Vector Machine Classifier, and K-Nearest-Neighbors Classifier.
-I decided to investigate the categorical and continuos features seperately and tried to find the most successful classification algorithm based on those 
+For the project we decided to try a number of different methods for regression and classification.
+The way each model was tested and validated was with Straified 10-K Fold Cross Validation, in which the classification training data was split into ten parts and
+equally used for testing and training.The choice of method comparison was based on familiarity above all else, in which we could relly on my current understanding of each 
+method in order to better select between each.
+Initial model implmentation was with the scikit learns default settings for each model.
+
+For classification we tried a Gaussian Naive Bayes Classifier, MLP Classifier, Random Forest Classifier, Support Vector Machine Classifier, and K-Nearest-Neighbors Classifier.
+We decided to investigate the categorical and continuos features seperately and tried to find the most successful classification algorithm based on those 
 seperate features.
+The highest performer on categorical features was the Support Vector Machine Classifier, and the highetst performer on continuos features was the Gaussian Naive Bayes Classifier.
+The highest of these two was the Support Vector Machine Classifier on categorical features.
+
+For regression we tried MLP Regressor, Random Forest Regressor, Support Vector Machine Regressor, and K-Nearest-Neighbors Regressor.
+The highest performing algorithm was the Random Forest Regressor, the second highest performing algorithm was K-Nearest-Neighbors Regressor. 
+The other algorithms performed arbitraily worse, with R-squared scores below 0.0.

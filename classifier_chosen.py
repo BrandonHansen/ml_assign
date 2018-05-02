@@ -19,10 +19,25 @@ cont_feature_cols = [3,14,24,39]
 disc_feature_cols = [i for i in range(0, 48) if i not in cont_feature_cols]
 class_labels = 48
 
+'''
 full_features = pd.read_csv(file_name, usecols=full_feature_cols)
 cont_features = pd.read_csv(file_name, usecols=cont_feature_cols)
 disc_features = pd.read_csv(file_name, usecols=disc_feature_cols)
 classes = pd.read_csv(file_name, usecols=[class_labels])
+'''
+
+minority = full_features[full_features[class_labels] == 1]
+majority = full_features[full_features[class_labels] == -1]
+min_upsampled = resample(minority, replace=True, n_samples=3118)
+
+upsampled = pd.concat([majority, min_upsampled])
+
+upsampled = upsampled.sample(frac=1).reset_index(drop=True)
+
+cont_features = upsampled[cont_feature_cols]
+disc_features = upsampled[disc_feature_cols]
+classes = upsampled[class_labels]
+
 
 selected_features = cont_features
 
