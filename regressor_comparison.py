@@ -26,15 +26,14 @@ selected_features = full_features
 #TRANSFORM FEATURES AND CLASS TYPE
 features_data = selected_features.as_matrix()
 class_data = np.ravel(classes.as_matrix())
-'''
+
 model = KNeighborsRegressor(n_neighbors=30)
 regressorTesting('knn', model, features_data, class_data)
-'''
+
 model = RandomForestRegressor()
 regressorTesting('rf', model, features_data, class_data)
-'''
+
 model = svm.SVR()
 regressorTesting('svm', model, features_data, class_data)
 model = MLPRegressor(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(20, 10), random_state=1)
 regressorTesting('mlp', model, features_data, class_data)
-'''

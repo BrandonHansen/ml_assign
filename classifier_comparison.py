@@ -14,8 +14,10 @@ import numpy as np
 
 #none, down, up
 data_sample = "up"
-#disc, cont
+#all, disc, cont
 data_type = "cont"
+
+print("experiement:", data_sample, data_type)
 
 ###DEFINE FEATURES AND CLASSES, GET DATA FROM FILE
 
@@ -54,11 +56,13 @@ if data_sample == "down" or data_sample == "up":
 		
 	resampled = resampled.sample(frac=1).reset_index(drop=True)
 		
+	all_features = resampled[full_feature_cols]
 	cont_features = resampled[cont_feature_cols]
 	disc_features = resampled[disc_feature_cols]
 	classes = resampled[class_labels]
 else:
 	#GET ORIGINAL PROPORTION
+	all_features = pd.read_csv(file_name, usecols=full_feature_cols)
 	cont_features = pd.read_csv(file_name, usecols=cont_feature_cols)
 	disc_features = pd.read_csv(file_name, usecols=disc_feature_cols)
 	classes = pd.read_csv(file_name, usecols=[class_labels])
@@ -66,8 +70,10 @@ else:
 #CHOOSE FEATURE TYPE
 if data_type == "disc":
 	selected_features = disc_features
-else:
+elif data_type == "cont":
 	selected_features = cont_features
+else:
+	selected_features = all_features
 
 #TRANSFORM FEATURES AND CLASS TYPE
 features_data = selected_features.as_matrix()
@@ -75,21 +81,18 @@ class_data = np.ravel(classes.as_matrix())
 
 
 ###DO TESTS
-'''
+
 model = GaussianNB()
 classifierTesting('bayes', model, features_data, class_data)
-model = KNeighborsClassifier(n_neighbors=3)
+model = KNeighborsClassifier()
 classifierTesting('knn', model, features_data, class_data)
 
 model = RandomForestClassifier()
 classifierTesting('rf', model, features_data, class_data)
 
-model = LogisticRegression(C=1e5)
+model = LogisticRegression()
 classifierTesting('logistic', model, features_data, class_data)
-'''
 model = svm.SVC()
 classifierTesting('svm', model, features_data, class_data)
-'''
-model = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(100, 50), random_state=1)
+model = MLPClassifier()
 classifierTesting('mlp', model, features_data, class_data)
-'''

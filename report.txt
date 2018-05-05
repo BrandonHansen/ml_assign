@@ -1,15 +1,24 @@
-For the project we decided to try a number of different methods for regression and classification.
-The way each model was tested and validated was with Straified 10-K Fold Cross Validation, in which the classification training data was split into ten parts and
-equally used for testing and training.The choice of method comparison was based on familiarity above all else, in which we could relly on my current understanding of each 
-method in order to better select between each.
-Initial model implmentation was with the scikit learns default settings for each model.
+Brandon Hansen
+Matthew Fabian
 
-For classification we tried a Gaussian Naive Bayes Classifier, MLP Classifier, Random Forest Classifier, Support Vector Machine Classifier, and K-Nearest-Neighbors Classifier.
-We decided to investigate the categorical and continuos features seperately and tried to find the most successful classification algorithm based on those 
-seperate features.
-The highest performer on categorical features was the Support Vector Machine Classifier, and the highetst performer on continuos features was the Gaussian Naive Bayes Classifier.
-The highest of these two was the Support Vector Machine Classifier on categorical features.
+    For the assignment it was decided that we would compare six different models for the classification task and four different models for the regression task. A description of each models experimental setup will be explained starting from classification then to regression.
 
-For regression we tried MLP Regressor, Random Forest Regressor, Support Vector Machine Regressor, and K-Nearest-Neighbors Regressor.
-The highest performing algorithm was the Random Forest Regressor, the second highest performing algorithm was K-Nearest-Neighbors Regressor. 
-The other algorithms performed arbitraily worse, with R-squared scores below 0.0.
+    For classification the models compared are Gaussian Naive Bayes Classifier, MLP Classifier, Random Forest Classifier, Logistic Regression Classifier, Support Vector Machine Classifier, and K-Nearest-Neighbors Classifier. The choice of classifiers to test was based off of our individual knowledge of each. The evaluation metric used was Stratified 10-K Fold Cross Validation as it provides a balanced testing training comparison overall possible data points. For the experiments, the division of data between continuous and discrete was used in order to better understand the significance of each feature, as a form of feature selection. Upon examination of the classification dataset it was found that the division between positive and negative classes was approximately 25% and 75% respectively. Given the imbalance between these classes the methods of upsampling and downsampling where used for balancing training and testing sets in order to train a model reliably for the final data. The the separate use of discrete, continuous, and all features along with data sampling being either none, upsampled, or downsampled gives nine possible experimental combinations for each machine learning model, given that the model is being used with sklearns default parameters. Models were compared by overall accuracy and while F1 measure was taken it was not considered.
+    Of these experiments the four highest performing in each of its respective experimental conditions were:
+
+    Continuous Features, Upsampled Data:     Support Vector Classifier 0.96
+All Features, Upsampled Data:         Support Vector Classifier 0.95
+Discrete Features, Upsampled Data:     Random Forest Classifier 0.85
+All Features, Normal Data:             Logistic Regression Classifier 0.85
+
+    The highest accuracy found was using the source vector classifier, with continuous features and upsampled data. It performed very similarly with all features present except with a -1% difference on average. This may be due to some features being redundant in classification and creating unnecessary complexity, though more careful selection of features may improve the model. Though upsampling might have its own biasing issues, it would be preferable that a model over fit on features in respect to one class than for a model to over fit in selecting one class without respect to the features. So the support vector classifier was selected with training on upsampled data with continuous features being used exclusively.
+
+    For regression the models compared are MLP Regressor, Random Forest Regressor, Support Vector Machine Regressor, and K-Nearest-Neighbors Regressor. The choice of regressors to test was based off of our individual knowledge of each. The evaluation metric used was a normal train test split between 67% and 33% respectively as stratified sampling is not effective with continuous classes. Analysis via histogram showed that the data was imbalanced towards the upper bounds of the dataset. No sampling technique was used to correct for this. Instead the data was used completely in its original form due to a lack of available techniques for rebalancing continuous classes. Experimental parameters are singular with the train test split being used with all features being completely continuous, the R2 metric was used to determine fit. 
+Of the performance, the score of each model was:
+
+    All Features, Normal Data:         Random Forest Regressor 0.98
+All Features, Normal Data:         K-Nearest-Neighbors Regressor 0.87
+All Features, Normal Data:         Support Vector Regressor -0.07
+All Features, Normal Data:         MLP Regressor -1218.64
+
+    The highest accuracy was found to be from the Random Forest Regressor, without any chosen limitations on its depth besides those imposed by the algorithm. Despite the fact the random forest approximates the continuous class from discrete predictions by numerous trees, it does really well in performing in the regression. This may be due the target class is possibly being determined by semi abrupt thresholds in the features. If this is the case then a random forest model might prove to be very effective with such a task given it makes class decisions via node branching.
