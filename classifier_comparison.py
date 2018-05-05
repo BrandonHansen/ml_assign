@@ -10,8 +10,12 @@ import pandas as pd
 import numpy as np
 
 
+#TRAIN TEST VARIABLES
 
-data_sample = "none"
+#none, down, up
+data_sample = "up"
+#disc, cont
+data_type = "cont"
 
 ###DEFINE FEATURES AND CLASSES, GET DATA FROM FILE
 
@@ -19,6 +23,7 @@ file_name = "classification_train.txt"
 
 print("collecting data...")
 
+#DEFINE FEATURES AND CLASSES
 full_cols = [i for i in range(0, 49)]
 full_feature_cols = [i for i in range(0, 48)]
 cont_feature_cols = [3,14,24,39]
@@ -46,17 +51,25 @@ if data_sample == "down" or data_sample == "up":
 		upsampled = pd.concat([majority, min_upsampled])
 
 		resampled = upsampled
+		
+	resampled = resampled.sample(frac=1).reset_index(drop=True)
+		
 	cont_features = resampled[cont_feature_cols]
 	disc_features = resampled[disc_feature_cols]
 	classes = resampled[class_labels]
 else:
+	#GET ORIGINAL PROPORTION
 	cont_features = pd.read_csv(file_name, usecols=cont_feature_cols)
 	disc_features = pd.read_csv(file_name, usecols=disc_feature_cols)
 	classes = pd.read_csv(file_name, usecols=[class_labels])
 
+#CHOOSE FEATURE TYPE
+if data_type == "disc":
+	selected_features = disc_features
+else:
+	selected_features = cont_features
 
-selected_features = cont_features
-
+#TRANSFORM FEATURES AND CLASS TYPE
 features_data = selected_features.as_matrix()
 class_data = np.ravel(classes.as_matrix())
 
@@ -67,12 +80,16 @@ model = GaussianNB()
 classifierTesting('bayes', model, features_data, class_data)
 model = KNeighborsClassifier(n_neighbors=3)
 classifierTesting('knn', model, features_data, class_data)
-model = RandomForestClassifier(max_depth=2, random_state=0)
+
+model = RandomForestClassifier()
 classifierTesting('rf', model, features_data, class_data)
+
 model = LogisticRegression(C=1e5)
 classifierTesting('logistic', model, features_data, class_data)
 '''
-model = svm.SVC(kernel='linear')
+model = svm.SVC()
 classifierTesting('svm', model, features_data, class_data)
+'''
 model = MLPClassifier(solver='lbfgs', alpha=1e-5, hidden_layer_sizes=(100, 50), random_state=1)
 classifierTesting('mlp', model, features_data, class_data)
+'''

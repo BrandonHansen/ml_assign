@@ -46,6 +46,8 @@ def classifierTesting(name, model, features_data, class_data):
 		
 		fscore = f1_score(class_test, predicted, average='macro')  
 		fscores = fscores + fscore
+		
+		#print("subscore:", score, "subf1:", fscore)
 
 
 	print("accuracy: ", scores/10, ", f1: ", fscores/10)
